@@ -3,13 +3,13 @@ import { Button } from 'react-bootstrap';
 import '../assets/wishList.scss';
 
 const WishList = (props) => {
-    const { item={}, removeFromList} = props;
+    const { item = {}, removeFromList } = props;
     return (
-        <div>
-            {item?.name}
+        <div >
+            <span className='wishListItem'>{item?.name}</span>
             <Button
                 className='removeBtn'
-                onClick={() => { removeFromList(item)}}
+                onClick={() => { removeFromList(item) }}
             >X</Button>
         </div>
     )

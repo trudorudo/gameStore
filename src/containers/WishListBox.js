@@ -22,6 +22,7 @@ class WishListBox extends Component {
         return (
             <div className="wishListContainer">
                 <span>WISH LIST: </span>
+                <div className='wishListDiv'>
                 { 
                     wishListData?.map(game => (
                         <WishList 
@@ -30,7 +31,7 @@ class WishListBox extends Component {
                         />
                     ))
                 }
-
+                </div>
 
                 <Total wishListData={ wishListData }/>
                 

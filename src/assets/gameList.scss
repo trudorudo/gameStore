@@ -1,0 +1,22 @@
+.gameListContainer {
+    float: left;
+    width: 58rem;
+    margin: 4rem;
+    padding-left: 8rem;
+    .gameCover {
+        width: 9rem;
+    }
+    .gameBtn {
+        width: 9rem;
+        height: 2rem;
+        margin-top: -3rem;
+        background-color: #5a5a5a;
+        border-color: #5a5a5a;
+        color: blue;
+    }
+    .info {
+        display: block;
+        color: white;
+        margin-top: -0.5rem;
+    }
+}

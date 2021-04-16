@@ -1,0 +1,26 @@
+.wishListContainer {
+    background-color: #5a5a5a;
+    float: right;
+    width: 13rem;
+    height: 18rem;
+    border-top: 7px solid blue;
+    padding: 1rem;
+    margin: 4rem 6rem 0rem -3rem;
+    color: white;
+    
+    .removeBtn {
+        background-color: transparent;
+        border: none;
+        color: blue;
+        padding-bottom: 9px;
+        font-size: 12px;
+        width: fit-content;
+    }
+    .wishListDiv {
+        height: 12rem;
+        overflow: scroll;
+    }
+    .wishListItem {
+        font-size: 9px;
+    }
+}

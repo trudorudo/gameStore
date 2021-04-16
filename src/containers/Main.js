@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../assets/main.scss';
 import GameList from './GameList';
-import WishList from './WishList';
+import WishListBox from './WishListBox';
 
 
 class Main extends Component {
@@ -12,7 +12,7 @@ class Main extends Component {
         return (
             <div className='main'>
                 <GameList />
-                <WishList />
+                <WishListBox />
             </div>
         );
     }

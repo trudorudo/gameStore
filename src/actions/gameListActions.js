@@ -1,10 +1,9 @@
 import gameStoreService from '../service/gameStoreService';
 
-import axios from "axios";
-
 const SCOPE = 'gameList/';
 
-export const GET_GAME_LIST = `${SCOPE}GET_GAME_LIST `;
+export const GET_GAME_LIST = `${SCOPE}GET_GAME_LIST`;
+export const ADD_TO_WISH_LIST = `${SCOPE}ADD_TO_WISH_LIST`;
 
 const getGameList = () => ({
     type: GET_GAME_LIST,

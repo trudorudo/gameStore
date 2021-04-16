@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Card, Button } from 'react-bootstrap';
 import gameListActions from '../actions/gameListActions';
+import wishListActions from '../actions/wishListActions';
+import GameCard from '../components/GameCard';
 import '../assets/gameList.scss';
 
 
@@ -10,6 +11,7 @@ class GameList extends Component {
     constructor(props) {
         super(props);
         this.getGameStoreData = this.getGameStoreData.bind(this);
+        this.addToWishList = this.addToWishList.bind(this);
     };
 
     componentDidMount() {
@@ -20,6 +22,10 @@ class GameList extends Component {
         this.props.actions.getGameList();
     }
 
+    addToWishList(item) {
+        this.props.actions.addToWishList(item);
+    }
+
     render() {
         const { gameStoreData } = this.props;
         return (
@@ -27,12 +33,13 @@ class GameList extends Component {
                 <div class="container">
                     <div class="row">
                         {
-                            Object.keys(gameStoreData).map((item, i) => (
+                            gameStoreData && Object.keys(gameStoreData).map((item, key) => (
                                 <div class="col-sm">
-                                    <img className="gameCover" src={ gameStoreData[item].cover }/>
-                                    <Button className='gameBtn'>Add to List</Button>
-                                    <span className='info'>{gameStoreData[item].name}</span>
-                                    <span className='info'>{`${gameStoreData[item].price} rub.`}</span>
+                                    <GameCard
+                                        item={ gameStoreData[item] }
+                                        objkey={ key }
+                                        addToWishList={ this.addToWishList }
+                                    />
                                 </div>
                             ))
                         }
@@ -55,7 +62,8 @@ const mapStateToProps = state => {
 const mapDispathToProps = dispatch => ({
     actions: bindActionCreators(
         {
-            ...gameListActions
+            ...gameListActions,
+            ...wishListActions
         },
         dispatch
     )

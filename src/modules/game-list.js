@@ -1,4 +1,5 @@
 import axios from "axios"
+import {createSelector} from "reselect"
 
 /**
   CONSTANTS
@@ -16,7 +17,7 @@ export const FETCH_ERROR = `${moduleName}/FETCH_ERROR`;
 
 const initialRecord = {
   gameStoreData: {},
-  isFetchLoad: false,
+  isFetchLoading: false,
   errorMsg: null
 }
 
@@ -31,7 +32,7 @@ export default function gameListReducer(state = initialRecord, action = {}) {
     case FETCH_LOADING:
       return {
         ...state,
-        isFetchLoad: action.payload
+        isFetchLoading: action.payload
       }
     case FETCH_ERROR:
       return {
@@ -42,6 +43,20 @@ export default function gameListReducer(state = initialRecord, action = {}) {
       return state;
   }
 }
+
+/**
+ SELECTORS
+ */
+
+export const moduleSelector = state => state[moduleName]
+export const gameStoreDataSelector = createSelector(moduleSelector, state => state.gameStoreData)
+export const gameStoreDataArraySelector = createSelector(moduleSelector, state => {
+  //
+  return Object.keys(state.gameStoreData).map(item => state.gameStoreData[item])
+})
+export const isFetchLoadingSelector = createSelector(moduleSelector, state => state.isFetchLoading)
+export const errorMsgSelector = createSelector(moduleSelector, state => state.errorMsg)
+
 
 /**
  ACTION CREATORS

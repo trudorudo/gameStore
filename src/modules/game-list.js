@@ -1,4 +1,3 @@
-import axios from "axios"
 import {createSelector} from "reselect"
 
 /**
@@ -7,7 +6,8 @@ import {createSelector} from "reselect"
 
 export const moduleName = 'game-list'
 
-export const GET_GAME_LIST = `${moduleName}/GET_GAME_LIST`;
+export const GET_GAME_LIST_REQUEST = `${moduleName}/GET_GAME_LIST_REQUEST`;
+export const GET_GAME_LIST_SUCCESS = `${moduleName}/GET_GAME_LIST_SUCCESS`;
 export const FETCH_LOADING = `${moduleName}/FETCH_LOADING`;
 export const FETCH_ERROR = `${moduleName}/FETCH_ERROR`;
 
@@ -16,7 +16,7 @@ export const FETCH_ERROR = `${moduleName}/FETCH_ERROR`;
  */
 
 const initialRecord = {
-  gameStoreData: {},
+  gameStoreData: null,
   isFetchLoading: false,
   errorMsg: null
 }
@@ -24,21 +24,18 @@ const initialRecord = {
 
 export default function gameListReducer(state = initialRecord, action = {}) {
   switch(action.type){
-    case GET_GAME_LIST:
-      return {
-        ...state,
+    case GET_GAME_LIST_SUCCESS:
+      return Object.assign({}, state, {
         gameStoreData: action.payload
-      }
+      })
     case FETCH_LOADING:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         isFetchLoading: action.payload
-      }
+      })
     case FETCH_ERROR:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         errorMsg: action.payload
-      }
+      })
     default:
       return state;
   }
@@ -62,32 +59,6 @@ export const errorMsgSelector = createSelector(moduleSelector, state => state.er
  ACTION CREATORS
  */
 
-export const getGameList = () => (dispatch) => {
-
-  dispatch({
-    type: FETCH_LOADING,
-    payload: true
-  })
-
-  const url = 'https://gist.githubusercontent.com/Greyewi/e6cfa49e478387a7b878e4430e1f4223/raw/d045a5c2c977cf05d05ae1a4625762e69cc891c8/game_list.json'
-  axios({url: url, method: 'GET'})
-    .then(({data}) => {
-      dispatch({
-        type: GET_GAME_LIST,
-        payload: data
-      })
-    })
-    .catch((err) => {
-      dispatch({
-        type: FETCH_ERROR,
-        payload: err.message
-      })
-    })
-    .finally(() => {
-      dispatch({
-        type: FETCH_LOADING,
-        payload: false
-      })
-    })
-
-};
+export const getGameList = () => ({
+  type: GET_GAME_LIST_REQUEST
+});

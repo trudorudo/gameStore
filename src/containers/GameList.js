@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {errorMsgSelector, gameStoreDataSelector, getGameList, isFetchLoadingSelector} from '../modules/game-list'
 import GameCard from '../components/GameCard'
 import '../assets/gameList.scss'
-
+import {Spinner} from 'react-bootstrap'
 
 class GameList extends Component {
   constructor(props) {
@@ -25,13 +25,13 @@ class GameList extends Component {
   }
 
   render() {
-    const {gameStoreData} = this.props
+    const {gameStoreData, errorMsg, isFetchLoading} = this.props
     return (
       <div className="gameListContainer">
         <div class="container">
           <div class="row">
             {
-              gameStoreData && Object.keys(gameStoreData).map((item, key) => (
+              isFetchLoading ? <Spinner animation="border" /> : gameStoreData && Object.keys(gameStoreData).map((item, key) => (
                 <div class="col-sm">
                   <GameCard
                     item={gameStoreData[item]}
@@ -39,7 +39,7 @@ class GameList extends Component {
                     addToWishList={this.addToWishList}
                   />
                 </div>
-              ))
+              )) || errorMsg
             }
           </div>
         </div>

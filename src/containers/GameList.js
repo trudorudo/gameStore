@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import {
+    moduleName,
+    getGameList
+} from '../modules/game-list'
 import gameListActions from '../actions/gameListActions';
 import wishListActions from '../actions/wishListActions';
 import GameCard from '../components/GameCard';
@@ -19,7 +23,7 @@ class GameList extends Component {
     }
 
     getGameStoreData() {
-        this.props.actions.getGameList();
+        this.props.getGameList();
     }
 
     addToWishList(item) {
@@ -53,20 +57,20 @@ class GameList extends Component {
 const mapStateToProps = state => {
     const {
         gameStoreData
-    } = state.gameListReducer;
+    } = state[moduleName];
     return {
         gameStoreData
     }
 };
 
-const mapDispathToProps = dispatch => ({
-    actions: bindActionCreators(
-        {
-            ...gameListActions,
-            ...wishListActions
-        },
-        dispatch
-    )
-})
+// const mapDispathToProps = dispatch => ({
+//     actions: bindActionCreators(
+//         {
+//             ...gameListActions,
+//             ...wishListActions
+//         },
+//         dispatch
+//     )
+// })
 
-export default connect(mapStateToProps, mapDispathToProps)(GameList);
+export default connect(mapStateToProps, {getGameList})(GameList);

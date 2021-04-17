@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import gameListReducer from '../reducers/gameListReducer';
+import gameListReducer, {moduleName as gameListModule} from '../modules/game-list';
 import wishListReducer from '../reducers/wishListReducer';
 
 
 const rootReducer = combineReducers({
-    gameListReducer,
-    wishListReducer
+  [gameListModule]: gameListReducer,
+  wishListReducer
 });
 
 export default rootReducer;

@@ -1,31 +1,39 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {errorMsgSelector, gameStoreDataSelector, getGameList, isFetchLoadingSelector} from '../modules/game-list'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { errorMsgSelector, gameStoreDataSelector, getGameList, isFetchLoadingSelector } from '../modules/game-list';
+import { addToWishList } from '../modules/wish-list';
 import GameCard from '../components/GameCard'
 import '../assets/gameList.scss'
-import {Spinner} from 'react-bootstrap'
+import { Spinner } from 'react-bootstrap'
 
 class GameList extends Component {
   constructor(props) {
     super(props)
+    const { dispatch } = props;
+    this.boundActionCreators = bindActionCreators(getGameList, addToWishList, dispatch);
     this.getGameStoreData = this.getGameStoreData.bind(this)
     this.addToWishList = this.addToWishList.bind(this)
   };
 
   componentDidMount() {
-    this.getGameStoreData()
+    this.getGameStoreData();
   }
 
   getGameStoreData() {
-    this.props.getGameList()
+    let { dispatch } = this.props;
+    let action = getGameList();
+    dispatch(action)
   }
 
   addToWishList(item) {
-    this.props.actions.addToWishList(item)
+    let { dispatch } = this.props;
+    let action = addToWishList(item);
+    dispatch(action)
   }
 
   render() {
-    const {gameStoreData, errorMsg, isFetchLoading} = this.props
+    const { gameStoreData, errorMsg, isFetchLoading } = this.props
     return (
       <div className="gameListContainer">
         <div class="container">
@@ -52,6 +60,6 @@ const mapStateToProps = state => ({
   errorMsg: errorMsgSelector(state),
   gameStoreData: gameStoreDataSelector(state),
   isFetchLoading: isFetchLoadingSelector(state)
-})
+});
 
-export default connect(mapStateToProps, {getGameList})(GameList)
+export default connect(mapStateToProps)(GameList)

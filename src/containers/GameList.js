@@ -21,15 +21,11 @@ class GameList extends Component {
   }
 
   getGameStoreData() {
-    let { dispatch } = this.props;
-    let action = getGameList();
-    dispatch(action)
+    this.props.getGameList()
   }
 
   addToWishList(item) {
-    let { dispatch } = this.props;
-    let action = addToWishList(item);
-    dispatch(action)
+    this.props.addToWishList(item)
   }
 
   render() {
@@ -62,4 +58,7 @@ const mapStateToProps = state => ({
   isFetchLoading: isFetchLoadingSelector(state)
 });
 
-export default connect(mapStateToProps)(GameList)
+export default connect(mapStateToProps, {
+  getGameList,
+  addToWishList
+})(GameList)

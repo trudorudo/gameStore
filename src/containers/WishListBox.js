@@ -28,10 +28,11 @@ class WishListBox extends Component {
                 <span>WISH LIST: </span>
                 <div className='wishListDiv'>
                     {
-                        wishListData?.map(game => (
+                        wishListData?.map((game, key) => (
                             <WishList
                                 item={game}
                                 removeFromList={this.removeFromList}
+                                key={game.name + key}
                             />
                         ))
                     }

@@ -1,16 +1,26 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import WishListItem from '../components/wishListItem';
+import Total from '../components/Total';
 import '../assets/wishList.scss';
 
 const WishList = (props) => {
-    const { item = {}, removeFromList } = props;
+    const { wishListData, removeFromWishListAction } = props;
     return (
-        <div >
-            <span className='wishListItem'>{item?.name}</span>
-            <Button
-                className='removeBtn'
-                onClick={() => { removeFromList(item) }}
-            >X</Button>
+        <div className="wishListContainer">
+            <span>WISH LIST: </span>
+            <div className='wishListDiv'>
+                {
+                    wishListData?.map(game => (
+                        <WishListItem
+                            item={game}
+                            removeFromList={removeFromWishListAction}
+                        />
+                    ))
+                }
+            </div>
+
+            <Total wishListData={wishListData} />
+
         </div>
     )
 }

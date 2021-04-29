@@ -12,7 +12,7 @@ export const REMOVE_FROM_WISH_LIST = `${moduleName}/REMOVE_FROM_WISH_LIST`;
 
 /**
  REDUCER
- */
+*/
 
 const initialRecord = {
     wishListData: []
@@ -23,12 +23,12 @@ export default function wishListReducer(state = initialRecord, action = {}) {
         case ADD_TO_WISH_LIST:
             return {
                 ...state,
-                wishListData: pushToWishList(state.wishListData, action.payload)
+                wishListData: action.payload
             }
         case REMOVE_FROM_WISH_LIST:
             return {
                 ...state,
-                wishListData: removeFromWishList(state.wishListData, action.payload)
+                wishListData: action.payload
             }
         default:
             return state;
@@ -39,19 +39,24 @@ export default function wishListReducer(state = initialRecord, action = {}) {
  SELECTORS
  */
 
- export const moduleSelector = state => state[moduleName]
- export const wishListDataSelector = createSelector(moduleSelector, state => state.wishListData);
- 
+export const moduleSelector = state => state[moduleName]
+export const wishListDataSelector = createSelector(moduleSelector, state => state.wishListData);
 
- /**
- ACTION CREATORS
- */
 
-export const addToWishList = (item) => ({
-    type: ADD_TO_WISH_LIST,
-    payload: item
-})
-export const removeFromWishListAction = (item) => ({
-    type: REMOVE_FROM_WISH_LIST,
-    payload: item
-});
+/**
+ACTION CREATORS
+*/
+
+export const addToWishList = (item) => (dispatch, getState) => {
+    dispatch({
+        type: ADD_TO_WISH_LIST,
+        payload: pushToWishList(getState()[moduleName].wishListData, item)
+    })
+}
+
+export const removeFromWishListAction = (item) => (dispatch, getState) => {
+    dispatch({
+        type: REMOVE_FROM_WISH_LIST,
+        payload: removeFromWishList(getState()[moduleName].wishListData, item)
+    })
+}

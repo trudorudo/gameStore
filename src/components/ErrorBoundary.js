@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, memo } from 'react';
 import '../assets/gameList.scss';
 import noCover from '../assets/nocover.png';
 
@@ -9,11 +9,13 @@ class ErrorBoundary extends Component {
             hasError: false
         };
     }
+
     static getDerivedStateFromError(error) {
         // Update state so the next render will show the fallback UI.
         console.log('getDerivedStateFromError', error);
         return { hasError: true };
     }
+
     componentDidCatch(error, info) {
         this.setState({
             hasError: true
@@ -24,13 +26,19 @@ class ErrorBoundary extends Component {
     render() {
         if (this.state.hasError) {
             return (
-                <div>
-                    <img className="gameCover" src={noCover} />
-                </div>
+              noCover
             )
         }
         return this.props.children;
     }
 }
+
+// const youMastReRenderAlways = (prevProps, nextProps) => {
+//     console.log(prevProps, nextProps)
+//     if(JSON.stringify(prevProps.children) !== JSON.stringify(nextProps.children)){
+//         return false
+//     }
+//     return true
+// }
 
 export default ErrorBoundary;

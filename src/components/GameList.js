@@ -4,7 +4,7 @@ import GameCard from './GameCard';
 import ErrorBoundary from './ErrorBoundary'
 import '../assets/gameList.scss';
 
-const GameList = ({ isFetchLoading, gameStoreData, addToWishList, errorMsg, getGameList, removeFromWishListAction }) => {
+const GameList = ({ isFetchLoading, gameStoreData, addToWishList, errorMsg, getGameList, removeFromWishListAction, wishListData }) => {
 
     useEffect(() => {
         getGameList();
@@ -26,14 +26,14 @@ const GameList = ({ isFetchLoading, gameStoreData, addToWishList, errorMsg, getG
                         isFetchLoading ?
                             <Spinner animation="border" /> : gameStoreData && Object.keys(gameStoreData).map((item, key) => (
                                 <div className="col-sm" key={key}>
-                                    <ErrorBoundary>
-                                        <GameCard
-                                            item={gameStoreData[item]}
-                                            objkey={gameStoreData[item].name + key}
-                                            addToWishList={addToWishList}
-                                            removeFromWishListAction={removeFromWishListAction}
-                                        />
-                                    </ErrorBoundary>
+                                    <GameCard
+                                        wishListData={wishListData}
+                                        isWishList={!!wishListData.find(f => f.key === gameStoreData[item].name + key)}
+                                        item={gameStoreData[item]}
+                                        objkey={gameStoreData[item].name + key}
+                                        addToWishList={addToWishList}
+                                        removeFromWishListAction={removeFromWishListAction}
+                                    />
                                 </div>
                             )) || errorMsg
                     }
@@ -43,5 +43,4 @@ const GameList = ({ isFetchLoading, gameStoreData, addToWishList, errorMsg, getG
     )
 }
 
-
-export default GameList;
+export default GameList ;

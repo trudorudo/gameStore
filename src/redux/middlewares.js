@@ -1,10 +1,15 @@
 import axios from "axios"
-import {FETCH_ERROR, FETCH_LOADING, GET_GAME_LIST_REQUEST} from '../modules/game-list'
+import {FETCH_ERROR, FETCH_LOADING, GET_GAME_LIST_REQUEST, GET_GAME_LIST_REVERSE_REQUEST} from '../modules/game-list'
 
 const endpointsMap = {
   [GET_GAME_LIST_REQUEST] : {
     url: 'https://gist.githubusercontent.com/Greyewi/e6cfa49e478387a7b878e4430e1f4223/raw/d045a5c2c977cf05d05ae1a4625762e69cc891c8/game_list.json',
     selector: ({data}) => data,
+    method: 'GET'
+  },
+  [GET_GAME_LIST_REVERSE_REQUEST] : {
+    url: 'https://gist.githubusercontent.com/Greyewi/e6cfa49e478387a7b878e4430e1f4223/raw/d045a5c2c977cf05d05ae1a4625762e69cc891c8/game_list.json',
+    selector: ({data}) => Object.keys(data).reverse().map(key => data[key]),
     method: 'GET'
   },
 }

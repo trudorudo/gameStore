@@ -1,8 +1,7 @@
 import React, {memo, useCallback, useMemo} from 'react'
 import { Button } from 'react-bootstrap';
 import '../assets/gameList.scss';
-import ErrorBoundary from "./ErrorBoundary"
-
+import noCover from '../assets/nocover.png';
 
 
 const GameCard = (props) => {
@@ -14,22 +13,38 @@ const GameCard = (props) => {
 
     const btnText = useMemo(() => !isWishList ? "Add to List" : 'Remove', [isWishList])
 
-    return (
+    try{
+      return (
         <div className="gameCard">
-            <ErrorBoundary image={item.cover}>
-                <img className="gameCover" src={item.cover} />
-            </ErrorBoundary>
-            <Button
-              className='gameBtn'
-              onClick={() => onClickBtn(item, objkey)}
-            >
-              {btnText}
-            </Button>
+            <img className="gameCover" src={item.cover} />
+          <Button
+            className='gameBtn'
+            onClick={() => onClickBtn(item, objkey)}
+          >
+            {btnText}
+          </Button>
 
-            <span className='info'>{item?.name || ' '}</span>
-            <span className='info'>{`${item?.price || '0'} rub.`}</span>
+          <span className='info'>{item?.name || ' '}</span>
+          <span className='info'>{`${item?.price || '0'} rub.`}</span>
         </div>
-    )
+      )
+    } catch(err){
+      console.log(err)
+      return (
+        <div className="gameCard">
+            <img className="gameCover" src={noCover} />
+          <Button
+            className='gameBtn'
+            onClick={() => onClickBtn(item, objkey)}
+          >
+            {btnText}
+          </Button>
+
+          <span className='info'>{item?.name || ' '}</span>
+          <span className='info'>{`${item?.price || '0'} rub.`}</span>
+        </div>
+      )
+    }
 }
 
 const noWishList = (prevProps, nextProps) => {

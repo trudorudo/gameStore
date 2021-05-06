@@ -10,9 +10,10 @@ const WishList = (props) => {
             <span>WISH LIST: </span>
             <div className='wishListDiv'>
                 {
-                    wishListData?.map(game => (
+                    wishListData?.map((game, key) => (
                         <WishListItem
                             item={game}
+                            key={key}
                             removeFromList={removeFromWishListAction}
                         />
                     ))

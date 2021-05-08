@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import { Spinner } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react';
+import BeatLoader from "react-spinners/BeatLoader";
 import GameCard from './GameCard';
-import ErrorBoundary from './ErrorBoundary'
 import '../assets/gameList.scss';
 
 const GameList = ({ isFetchLoading, gameStoreData, addToWishList, errorMsg, getGameList, removeFromWishListAction, wishListData }) => {
@@ -18,29 +17,26 @@ const GameList = ({ isFetchLoading, gameStoreData, addToWishList, errorMsg, getG
         console.log("componentDidUpdate")
     }, [gameStoreData])
 
+    let [color, setColor] = useState("#ffffff");
     return (
         <div className="gameListContainer">
-            <div className="container">
-                <div className="row">
-                    {
-                        isFetchLoading ?
-                            <Spinner animation="border" /> : gameStoreData && Object.keys(gameStoreData).map((item, key) => (
-                                <div className="col-sm" key={key}>
-                                    <GameCard
-                                        wishListData={wishListData}
-                                        isWishList={!!wishListData.find(f => f.key === gameStoreData[item].name + key)}
-                                        item={gameStoreData[item]}
-                                        objkey={gameStoreData[item].name + key}
-                                        addToWishList={addToWishList}
-                                        removeFromWishListAction={removeFromWishListAction}
-                                    />
-                                </div>
+            {
+                isFetchLoading ?
+                    <BeatLoader size={100} color={color} /> : gameStoreData && Object.keys(gameStoreData).map((item, key) => (
+                        <div key={key}>
+                                <GameCard
+                                    wishListData={wishListData}
+                                    isWishList={!!wishListData.find(f => f.key === gameStoreData[item].name + key)}
+                                    item={gameStoreData[item]}
+                                    objkey={gameStoreData[item].name + key}
+                                    addToWishList={addToWishList}
+                                    removeFromWishListAction={removeFromWishListAction}
+                                />
+                            </div>
                             )) || errorMsg
                     }
-                </div>
-            </div>
-        </div>
-    )
+                        </div>
+                    )
 }
 
 export default GameList ;

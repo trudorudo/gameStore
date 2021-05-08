@@ -1,4 +1,6 @@
 .gameListContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     float: left;
     width: 58rem;
     margin: 4rem;
